@@ -17,10 +17,11 @@ function buySync(item, price, quantity, callback) {
 //   console.log(`${name} 이가 3초 만에 문을 열고 나왔습니다..`)
 // }
 
-function pay(total) {
-  console.log(`${total} 원을 지불하였습니다.`);
-}
+// function pay(total) {
+//   console.log(`${total} 원을 지불하였습니다.`);
+// }
 
-buySync('포켓몬빵', 1000, 5, pay);
+// buySync('포켓몬빵', 1000, 5, pay);
+
 // 자바스크립트의 비동기적 특성을 버리고,
 // 콜백으로 동기적으로 함

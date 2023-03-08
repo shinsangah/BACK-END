@@ -6,3 +6,5 @@ module.exports = {
   },
   node: true,
 };
+
+// node: true 표시해놔서 계속 빨간줄 안떴던거임

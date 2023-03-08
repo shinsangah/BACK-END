@@ -1,5 +1,5 @@
 const promise = new Promise(function (resolve, reject) {
-  const tetz = 'old';
+  const tetz = 'older';
 
   if (tetz === 'old') {
     setTimeout(function () {
@@ -9,3 +9,11 @@ const promise = new Promise(function (resolve, reject) {
     reject('tetz is getting old');
   }
 });
+
+promise
+  .then(function (data) {
+    console.log(data);
+  })
+  .catch(function (data) {
+    console.log(data);
+  });

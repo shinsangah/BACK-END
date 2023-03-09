@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/main.js"></script>
+</head>
+
+<!-- USER_ARR, userCounts -->
+
+<body>
+  <h1>Hello, EJS world!</h1>
+  <h1>회원 목록</h1>
+  <h2>
+    총 회원 수 <%= userCount %>
+
+  </h2>
+  <ul>
+    <% if(userCount > 0) { %>
+    <% for(let i=0; i < userCount; i++) { %>
+    <li>
+      <p>
+        ID : <%= USER_ARR[i].id %>
+      </p>
+      <p>
+        NAME : <%= USER_ARR[i].name %>
+      </p>
+      <p>
+        EMAIL : <%= USER_ARR[i].email %>
+      </p>
+
+    </li>
+    <% } %>
+    <% } else { %>
+    <li>회원 정보가 없습니다!</li>
+    <% } %>
+
+  </ul>
+  <img src="/images/puppy.jpg" alt="강아지" />
+</body>
+
+</html>
+
+<!-- ejs 는
+코드 사이사이에 자바스크립트를 자유롭게 사용할 수 있다. -->

@@ -25,23 +25,47 @@ router.get('/id/:id', (req, res) => {
   if (userData) {
     res.send(userData);
   } else {
-    res.send('ID를 못찾겠어요.');
+    const err = new Error('해당 ID를 가진 회원이 없습니다!');
+    err.statusCode = 404;
+    throw err;
   }
 });
 
 router.post('/add', (req, res) => {
-  if (req.query.id && req.query.name && req.query.email) {
-    const newUser = {
-      id: req.query.id,
-      name: req.query.sname,
-      email: req.query.email,
-    };
+  if (Object.keys(req.query).length >= 1) {
+    if (req.query.id && req.query.name && req.query.email) {
+      const newUser = {
+        id: req.query.id,
+        name: req.query.sname,
+        email: req.query.email,
+      };
 
-    USER.push(newUser);
+      USER.push(newUser);
 
-    res.send('회원 추가 완료!');
+      res.send('회원 추가 완료!');
+    } else {
+      const err = new Error('쿼리 입력이 잘못 되었습니다!');
+      err.statusCode = 400;
+      throw err;
+    }
+  } else if (req.body) {
+    if (req.body.id && req.body.name && req.body.email) {
+      const newUser = {
+        id: req.body.id,
+        name: req.body.sname,
+        email: req.body.email,
+      };
+      USER.push(newUser);
+      res.redirect('/users');
+    } else {
+      const err = new Error('폼 태그 입력을 확인 하세요!');
+      err.statusCode = 400;
+      throw err;
+    }
   } else {
-    res.send('쿼리 입력이 잘못 되었습니다!');
+    const err = new Error('데이터가 입력 되지 않았습니다!');
+    err.statusCode = 400;
+    throw err;
   }
 });
 
@@ -56,10 +80,14 @@ router.put('/modify/:id/', (req, res) => {
       };
       res.send('회원 정보 수정 완료!');
     } else {
-      res.send('해당 id의 정보가 없습니다.');
+      const err = new Error('해당 id를 가진 회원이 존재하지 않습니다!');
+      err.statusCode = 404;
+      throw err;
     }
   } else {
-    res.send('쿼리 입력이 잘못 되었습니다!');
+    const err = new Error('쿼리 입력이 잘못 되었습니다!');
+    err.statusCode = 400;
+    throw err;
   }
 });
 
@@ -69,7 +97,9 @@ router.delete('/delete/:id', (req, res) => {
     USER.splice(userIndex, 1);
     res.send('회원 삭제 완료!');
   } else {
-    res.send('해당 id의 정보가 없습니다.');
+    const err = new Error('해당 id를 가진 회원이 존재하지 않습니다!');
+    err.statusCode = 404;
+    throw err;
   }
 });
 

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>포스트 서비스</title>
+</head>
+
+<body>
+
+  <body>
+    <a href="/"></a>
+    <!-- 로컬 호스트 4000으로 가는 의미이다 '/' 언제든지 랜딩페이지로 이동 가능 -->
+    <h1>Hello, POST world!</h1>
+    <h1>포스트 목록</h1>
+    <h2>
+      포스트 수 <%= postsCount %>
+    </h2>
+    <ul>
+      <% if(postCounts > 0) { %>
+      <% for(let i=0; i < postCounts; i++) { %>
+      <li>
+        <p>
+          TITLE : <%= POSTS[i].title %>
+        </p>
+        <p>
+          CONTENT : <%= POSTS[i].content %>
+        </p>
+      </li>
+      <% } %>
+      <% } else { %>
+      <li>등록된 포스트 정보가 없습니다!</li>
+      <% } %>
+
+    </ul>
+
+    <form action="/posts/add" method="POST">
+
+      <div>
+        <label>제목</label>
+        <input type="text" name="title" />
+      </div>
+      <div>
+        <label>이름</label>
+        <input type="text" name="content" />
+      </div>
+      <button type="submit">제출</button>
+    </form>
+
+
+  </body>
+
+</html>

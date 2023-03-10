@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/main.js"></script>
+</head>
+
+<!-- USER_ARR, userCounts -->
+
+<body>
+  <h1>Hello, 실습 world!</h1>
+  <h1>글 목록</h1>
+  <h2>
+    총 게시글 <%= postCount %>
+  </h2>
+  <ul>
+    <% if(postCount > 0) { %>
+    <% for(let i=0; i < postCount; i++) { %>
+    <li>
+      <p>
+        TITLE : <%= POST[i].title %>
+      </p>
+      <p>
+        CONTENT : <%= POST[i].content %>
+      </p>
+
+    </li>
+    <% } %>
+    <% } else { %>
+    <li>글 정보가 없습니다!</li>
+    <% } %>
+
+  </ul>
+
+
+  <form action="/post/add" method="POST">
+
+    <div>
+      <label>제목</label>
+      <input type="text" name="title" />
+    </div>
+    <div>
+      <label>내용</label>
+      <input type="text" name="content" />
+    </div>
+    <button type="submit">제출</button>
+  </form>
+
+  <img src="/images/puppy.jpg" alt="강아지" />
+</body>
+
+</html>

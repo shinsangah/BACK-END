@@ -1,41 +1,27 @@
-// #ts-check
 const express = require('express');
 
 const router = express.Router();
 
-const USER = {
-  1: {
-    email: 'sangah',
-    name: '신상아',
-  },
-};
-
-const USER_ARR = [
+const USER = [
   {
     id: 'tetz',
     name: '이효석',
-    email: 'tetz@gmail.com',
+    email: 'a@daum.net',
   },
   {
     id: 'pororo',
     name: '뽀로로',
-    email: 'pororo@gmail.com',
+    email: 'b@daum.net',
   },
 ];
 
-// http://localhost:4000/users
 router.get('/', (req, res) => {
-  // res.send('회원 목록');
-  // res.send(USER);
-  res.render('users', { USER_ARR, userCount: USER_ARR.length });
+  const userCount = USER.length;
+  res.render('users', { USER, userCount });
 });
 
 router.get('/id/:id', (req, res) => {
-  // res.send('특정 회원 정보');
-  if (!req.params.id) res.send('ID를 입력해주세요.');
-  // depth는 유지를 하면서 동일한 기능 만드는 것이다.
-  // 요즘 코딩 트렌드임. if else문 다 안씀..
-  const userData = USER[req.params.id];
+  const userData = USER.find((user) => user.id === req.params.id);
   if (userData) {
     res.send(userData);
   } else {
@@ -43,34 +29,58 @@ router.get('/id/:id', (req, res) => {
   }
 });
 
-// get 방식은 서버에 변경을 하지 않을 때 사용
 router.post('/add', (req, res) => {
-  // res.send('회원 등록');
+  if (req.query.id && req.query.name && req.query.email) {
+    const newUser = {
+      id: req.query.id,
+      name: req.query.sname,
+      email: req.query.email,
+    };
 
-  // 코드 depth 줄이기
-  if (!req.query.id || !req.query.name)
-    return res.end('쿼리 입력이 잘못 되었습니다.');
+    USER.push(newUser);
 
-  const newUser = {
-    id: req.query.id,
-    name: req.query.name,
-  };
-
-  // Object.keys() ; 인자로 전달받은 키 값들을 배열로 만들어줌
-  USER[Object.keys(USER).length + 1] = newUser;
-
-  res.send('회원 등록 완료!');
+    res.send('회원 추가 완료!');
+  } else {
+    res.send('쿼리 입력이 잘못 되었습니다!');
+  }
 });
 
-// p/69
+router.put('/modify/:id/', (req, res) => {
+  if (req.query.name && req.query.email) {
+    const userIndex = USER.findIndex((user) => user.id === req.params.id);
+    if (userIndex !== -1) {
+      USER[userIndex] = {
+        id: req.params.id,
+        name: req.query.name,
+        email: req.query.email,
+      };
+      res.send('회원 정보 수정 완료!');
+    } else {
+      res.send('해당 id의 정보가 없습니다.');
+    }
+  } else {
+    res.send('쿼리 입력이 잘못 되었습니다!');
+  }
+});
+
+router.delete('/delete/:id', (req, res) => {
+  const userIndex = USER.findIndex((user) => user.id === req.params.id);
+  if (userIndex !== -1) {
+    USER.splice(userIndex, 1);
+    res.send('회원 삭제 완료!');
+  } else {
+    res.send('해당 id의 정보가 없습니다.');
+  }
+});
+
 router.get('/show', (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/html; charset=UTF-8' });
+  res.writeHead(200, { 'content-Type': 'text/html; charset=UTF-8' });
   res.write('<h1>Hello, Dynamic Web Page</h1>');
 
-  for (let i = 0; i < USER_ARR.length; i++) {
-    res.write(`<h2>USER ID is ${USER_ARR[i].id}</h2>`);
-    res.write(`<h2>USER NAME is ${USER_ARR[i].name}</h2>`);
-    res.write(`<h2>USER EMAIL is ${USER_ARR[i].email}</h2>`);
+  for (let i = 0; i < USER.length; i += 1) {
+    res.write(`<h2>USER ID is ${USER[i].id}</h2>`);
+    res.write(`<h2>USER NAME is ${USER[i].name}</h2>`);
+    res.write(`<h2>USER Email is ${USER[i].email}</h2>`);
   }
 
   res.end();
